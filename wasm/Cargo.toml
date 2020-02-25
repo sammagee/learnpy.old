@@ -1,5 +1,5 @@
 [package]
-name = "wasm"
+name = "learnpy"
 version = "0.1.0"
 authors = ["Sam <s@sammagee.me>"]
 edition = "2018"
