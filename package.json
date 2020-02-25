@@ -24,6 +24,6 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "learnpy": "file:./wasm/pkg"
+        "learnpy": "^0.1.0"
     }
 }
