@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-1 flex-shrink-0">
+    <div class="flex flex-1 flex-shrink-0 flex-col md:flex-row">
         <!-- Editor -->
         <div id="editor" class="flex-1 flex-shrink-0 relative">
             <textarea ref="editor"></textarea>
@@ -17,7 +17,8 @@
     import _CodeMirror from "codemirror";
     import Split from "split.js";
 
-    const CodeMirror = window.CodeMirror || _CodeMirror
+    const CodeMirror = window.CodeMirror || _CodeMirror;
+    let splitInstance;
 
     import "codemirror/lib/codemirror.css";
     import "../../css/editor/themes/tailwind.css";
@@ -26,6 +27,14 @@
 
     export default {
         name: 'editor',
+
+        created() {
+            window.addEventListener('resize', this.initializeSplits);
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.initializeSplits);
+        },
 
         mounted() {
             // wasm.greet();
@@ -46,7 +55,10 @@
             },
 
             initializeSplits() {
-                Split(['#editor', '#output'], {
+                if (splitInstance) splitInstance.destroy();
+
+                splitInstance = Split(['#editor', '#output'], {
+                    direction: window.innerWidth >= 768 ? 'horizontal' : 'vertical',
                     minSize: [250, 250],
                     elementStyle: (dimension, size, gutterSize) => {
                         return {
