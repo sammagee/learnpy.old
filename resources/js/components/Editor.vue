@@ -76,16 +76,16 @@
                     gutter: (index, direction) => {
                         const gutter = document.createElement('div');
                         if (direction === 'horizontal') {
-                            gutter.className = 'flex flex-shrink-0 items-center justify-center px-1 bg-gray-800 cursor-col-resize';
+                            gutter.className = 'flex flex-shrink-0 items-center justify-center px-2 md:px-1 bg-gray-800 cursor-col-resize';
                             gutter.innerHTML = `
-                                <svg class="text-gray-600 h-3" viewBox="0 0 8 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="text-gray-600 h-4 md:h-3" viewBox="0 0 8 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7 17V1H5v16h2zM1 1v16h2V1H1z" />
                                 </svg>
                             `;
                         } else {
-                            gutter.className = 'flex flex-shrink-0 items-center justify-center py-1 bg-gray-800 cursor-row-resize';
+                            gutter.className = 'flex flex-shrink-0 items-center justify-center py-2 md:py-1 bg-gray-800 cursor-row-resize';
                             gutter.innerHTML = `
-                                <svg class="text-gray-600 w-3" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="text-gray-600 w-4 md:w-3" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 7h16V5H1v2zm16-6H1v2h16V1z" />
                                 </svg>
                             `;
