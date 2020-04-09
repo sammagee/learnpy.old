@@ -25,6 +25,8 @@
     import "codemirror/addon/selection/active-line";
 
     export default {
+        name: 'editor',
+
         mounted() {
             // wasm.greet();
             this.initializeEditor();
