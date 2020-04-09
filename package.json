@@ -27,7 +27,7 @@
     "dependencies": {
         "@wasm-tool/wasm-pack-plugin": "^1.2.0",
         "codemirror": "^5.52.2",
-        "learnpy": "file:./wasm/pkg",
+        "learnpy": "^0.1.0",
         "split.js": "^1.5.11",
         "tailwindcss": "^1.2.0"
     }
