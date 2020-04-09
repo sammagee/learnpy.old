@@ -140,3 +140,7 @@
   text-decoration: underline;
   color: white !important;
 }
+
+.cm-s-tailwind .CodeMirror-gutter-breakpoint {
+  color: theme('colors.red.600');
+}

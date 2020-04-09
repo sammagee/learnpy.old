@@ -18,6 +18,8 @@
     import Split from "split.js";
 
     const CodeMirror = window.CodeMirror || _CodeMirror;
+
+    let editorInstance;
     let splitInstance;
 
     import "codemirror/lib/codemirror.css";
@@ -44,13 +46,19 @@
 
         methods: {
             initializeEditor() {
-                CodeMirror.fromTextArea(this.$refs.editor, {
+                editorInstance = CodeMirror.fromTextArea(this.$refs.editor, {
                     autofocus: true,
+                    gutters: ["CodeMirror-linenumbers", "breakpoints"],
                     lineNumbers: true,
                     lineWrapping: true,
                     mode: 'python',
                     styleActiveLine: true,
                     theme: 'tailwind'
+                });
+
+                editorInstance.on("gutterClick", (editor, n) => {
+                    var info = editorInstance.lineInfo(n);
+                    editorInstance.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : this.makeMarker());
                 });
             },
 
@@ -90,6 +98,13 @@
                         }
                     },
                 });
+            },
+
+            makeMarker() {
+                var marker = document.createElement("div");
+                marker.className = "CodeMirror-gutter-breakpoint";
+                marker.innerHTML = "●";
+                return marker;
             }
         }
     }
@@ -106,6 +121,10 @@
 
     .CodeMirror-gutter {
         padding: 1rem 0.5rem;
+    }
+
+    .CodeMirror-gutter-elt {
+        @apply cursor-pointer;
     }
 
     .CodeMirror-lines {
