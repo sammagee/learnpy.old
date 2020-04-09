@@ -1,9 +1,11 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->group(function () {
+    Route::get('editor', 'EditorController@index')->name('editor');
 });
 
-Auth::routes();
+Route::middleware('guest')->group(function () {
+    Route::get('/', 'LandingController@index')->name('landing');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['verify' => true]);

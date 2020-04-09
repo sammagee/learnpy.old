@@ -1,0 +1,9 @@
+html, body {
+    @apply overflow-hidden;
+}
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
