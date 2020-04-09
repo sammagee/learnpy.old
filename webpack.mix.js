@@ -7,5 +7,6 @@ mix.js('resources/js/bootstrap.js', 'public/js/app.js')
    ]);
 
 if (mix.inProduction()) {
-   mix.purgeCss();
+   mix.purgeCss()
+      .version();
 }

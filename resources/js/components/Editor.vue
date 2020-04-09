@@ -5,13 +5,6 @@
             <textarea ref="editor"></textarea>
         </div>
 
-        <!-- Divider -->
-        <!-- <div class="flex flex-shrink-0 items-center px-1 bg-gray-800 cursor-col-resize">
-            <svg class="text-gray-600 h-3" viewBox="0 0 8 18" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M7 17V1H5v16h2zM1 1v16h2V1H1z" />
-            </svg>
-        </div> -->
-
         <!-- Output -->
         <div id="output" class="flex-1 flex-shrink-0">
             <textarea class="bg-transparent flex-shrink-0 flex-1 resize-none p-4 font-mono focus:outline-none text-gray-400 leading-8" readonly>Loading...</textarea>
@@ -20,7 +13,7 @@
 </template>
 
 <script>
-    import * as wasm from "learnpy";
+    // import * as wasm from "learnpy";
     import _CodeMirror from "codemirror";
     import Split from "split.js";
 
