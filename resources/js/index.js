@@ -1,7 +1,7 @@
 import Vue from 'vue';
+import Editor from './components/Editor';
 
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.component(Editor.name, Editor);
 
 const app = new Vue({
     el: '#app',
