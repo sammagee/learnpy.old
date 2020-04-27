@@ -33,5 +33,6 @@
         "rustpython_wasm": "0.1.0-pre-alpha.2",
         "split.js": "^1.5.11",
         "tailwindcss": "^1.2.0"
-    }
+    },
+    "sideEffects": false
 }
