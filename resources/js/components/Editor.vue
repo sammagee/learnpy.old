@@ -2,12 +2,15 @@
     <div class="flex flex-1 flex-shrink-0 flex-col md:flex-row">
         <!-- Editor -->
         <div id="editor" class="flex-1 flex-shrink-0 relative">
-            <textarea ref="editor"></textarea>
+            <textarea ref="editor" v-model="code"></textarea>
         </div>
 
         <!-- Output -->
         <div id="output" class="flex-1 flex-shrink-0">
-            <textarea class="bg-transparent flex-shrink-0 flex-1 resize-none p-4 font-mono focus:outline-none text-gray-400 leading-8" readonly>Loading...</textarea>
+            <textarea
+                ref="output"
+                class="absolute inset-0 h-full w-full bg-transparent flex-shrink-0 resize-none p-4 font-mono focus:outline-none text-gray-400 leading-8"
+                readonly>Loading...</textarea>
         </div>
     </div>
 </template>
@@ -16,6 +19,9 @@
     // import * as wasm from "learnpy";
     import _CodeMirror from "codemirror";
     import Split from "split.js";
+    import * as rp from 'rustpython_wasm';
+
+    window.rp = rp;
 
     const CodeMirror = window.CodeMirror || _CodeMirror;
 
@@ -30,6 +36,10 @@
     export default {
         name: 'editor',
 
+        data: () => ({
+            code: '',
+        }),
+
         created() {
             window.addEventListener('resize', this.initializeSplits);
         },
@@ -39,7 +49,6 @@
         },
 
         mounted() {
-            // wasm.greet();
             this.initializeEditor();
             this.initializeSplits();
         },
@@ -48,10 +57,22 @@
             initializeEditor() {
                 editorInstance = CodeMirror.fromTextArea(this.$refs.editor, {
                     autofocus: true,
+                    extraKeys: {
+                        'Ctrl-R': this.run,
+                        'Cmd-R': this.run,
+                        'Shift-Tab': 'indentLess',
+                        'Ctrl-/': 'toggleComment',
+                        'Cmd-/': 'toggleComment',
+                        Tab: editor => {
+                            var spaces = Array(editor.getOption('indentUnit') + 1).join(' ');
+                            editor.replaceSelection(spaces);
+                        }
+                    },
                     gutters: ["CodeMirror-linenumbers", "breakpoints"],
+                    indentUnit: 4,
                     lineNumbers: true,
                     lineWrapping: true,
-                    mode: 'python',
+                    mode: 'text/x-python',
                     styleActiveLine: true,
                     theme: 'tailwind'
                 });
@@ -59,6 +80,13 @@
                 editorInstance.on("gutterClick", (editor, n) => {
                     var info = editorInstance.lineInfo(n);
                     editorInstance.setGutterMarker(n, "breakpoints", info.gutterMarkers ? null : this.makeMarker());
+                });
+
+                editorInstance.on('change', editor => {
+                    this.code = editor.getValue();
+                    if (this.$emit) {
+                        this.$emit('input', this.code);
+                    }
                 });
             },
 
@@ -105,6 +133,31 @@
                 marker.className = "CodeMirror-gutter-breakpoint";
                 marker.innerHTML = "●";
                 return marker;
+            },
+
+            run() {
+                let vm = this;
+
+                vm.$refs.output.value = '';
+
+                try {
+                    rp.pyEval(vm.code, {
+                        stdout: output => {
+                            const shouldscroll = vm.$refs.output.scrollHeight - vm.$refs.output.scrollTop === vm.$refs.output.clientHeight;
+                            vm.$refs.output.value += output;
+
+                            console.log(output);
+                            if (shouldscroll) {
+                                vm.$refs.output.scrollTop = vm.$refs.output.scrollHeight;
+                            }
+                        }
+                    })
+                } catch (err) {
+                    if (err instanceof WebAssembly.RuntimeError) {
+                        err = window.__RUSTPYTHON_ERROR || err;
+                    }
+                    console.error(err);
+                }
             }
         }
     }

@@ -29,6 +29,8 @@
         "@wasm-tool/wasm-pack-plugin": "^1.2.0",
         "codemirror": "^5.52.2",
         "learnpy": "^0.1.0",
+        "raw-loader": "^4.0.0",
+        "rustpython_wasm": "0.1.0-pre-alpha.2",
         "split.js": "^1.5.11",
         "tailwindcss": "^1.2.0"
     }
