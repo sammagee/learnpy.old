@@ -197,29 +197,3 @@ main()
         }
     }
 </script>
-
-<style>
-    .CodeMirror {
-        @apply absolute inset-0 bg-transparent h-full w-full resize-none font-mono text-gray-400 leading-8 pr-4 flex-shrink-0;
-    }
-
-    .CodeMirror:focus {
-        @apply outline-none;
-    }
-
-    .CodeMirror-gutter {
-        @apply px-2 pb-4;
-    }
-
-    .CodeMirror-gutter-elt {
-        @apply cursor-pointer;
-    }
-
-    .CodeMirror-lines {
-        @apply pr-0 pb-4;
-    }
-
-    .CodeMirror-linenumber {
-        @apply pl-4;
-    }
-</style>

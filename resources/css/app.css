@@ -5,6 +5,7 @@
 @import "tailwindcss/components";
 @import "./base.css";
 @import "../../node_modules/codemirror/lib/codemirror.css";
+@import "./editor/base.css";
 @import "./editor/themes/tailwind.css";
 
 @import "tailwindcss/utilities";
