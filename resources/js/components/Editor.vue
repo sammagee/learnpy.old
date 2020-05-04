@@ -59,13 +59,19 @@
         name: 'editor',
 
         data: () => ({
-            code: `def say_hello(str):
-    return f"Hello, {str}!"
+            code: `def fib(n):
+    n1 = 0
+    n2 = 1
+
+    print(f"These are the first {n} numbers in the Fibonacci sequence:")
+
+    for i in range(n):
+        print(f"\t{n1}")
+        n1, n2 = n2, n1 + n2
 
 def main():
-    for i in range(5):
-        print(f"=> " + say_hello("World"))
-    
+    fib(10)
+
 main()
 `,
             output: '',
