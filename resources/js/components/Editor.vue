@@ -1,16 +1,40 @@
 <template>
     <div class="flex flex-1 flex-shrink-0 flex-col md:flex-row">
         <!-- Editor -->
-        <div id="editor" class="flex-1 flex-shrink-0 relative">
-            <textarea ref="editor" v-model="code"></textarea>
+        <div id="editor" class="flex flex-col flex-1 relative">
+            <header class="flex items-center space-x-2 px-4 py-4">
+                <h3 class="text-xs uppercase font-semibold text-gray-800 select-none">Editor</h3>
+
+                <button
+                    class="rounded-full text-gray-700 focus:outline-none hover:text-gray-600 focus:text-gray-600 transition ease-in-out duration-150"
+                    @click="run"
+                    aria-label="Run Code"
+                    title="`super + enter` or `super + r` to run code">
+                    <svg class="w-3" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="flex-1">
+                <textarea ref="editor" v-model="code"></textarea>
+            </div>
         </div>
 
         <!-- Output -->
-        <div id="output" class="flex-1 flex-shrink-0">
-            <textarea
-                ref="output"
-                class="absolute inset-0 h-full w-full bg-transparent flex-shrink-0 resize-none p-4 font-mono focus:outline-none text-gray-400 leading-8"
-                readonly>Loading...</textarea>
+        <div id="output" class="flex flex-col flex-1">
+            <header class="flex items-center justify-between px-4 py-4">
+                <h3 class="text-xs uppercase font-semibold text-gray-800 select-none">Output</h3>
+            </header>
+
+            <div class="flex-1">
+                <textarea
+                    ref="output"
+                    class="absolute inset-0 h-full w-full bg-transparent flex-shrink-0 resize-none px-4 pb-4 font-mono focus:outline-none text-gray-400 leading-8"
+                    readonly
+                    v-model="output"></textarea>
+            </div>
         </div>
     </div>
 </template>
@@ -37,11 +61,22 @@
         name: 'editor',
 
         data: () => ({
-            code: '',
+            code: `def say_hello(str):
+    return f"Hello, {str}!"
+
+def main():
+    for i in range(5):
+        print(f"=> " + say_hello("World"))
+    
+main()
+`,
+            output: '',
         }),
 
         created() {
             window.addEventListener('resize', this.initializeSplits);
+
+            window.EventBus.$on('run', this.run);
         },
 
         destroyed() {
@@ -51,6 +86,7 @@
         mounted() {
             this.initializeEditor();
             this.initializeSplits();
+            this.run();
         },
 
         methods: {
@@ -138,15 +174,14 @@
             run() {
                 let vm = this;
 
-                vm.$refs.output.value = '';
+                vm.output = '';
 
                 try {
                     rp.pyEval(vm.code, {
                         stdout: output => {
                             const shouldscroll = vm.$refs.output.scrollHeight - vm.$refs.output.scrollTop === vm.$refs.output.clientHeight;
-                            vm.$refs.output.value += output;
+                            vm.output += output;
 
-                            console.log(output);
                             if (shouldscroll) {
                                 vm.$refs.output.scrollTop = vm.$refs.output.scrollHeight;
                             }
@@ -156,6 +191,8 @@
                     if (err instanceof WebAssembly.RuntimeError) {
                         err = window.__RUSTPYTHON_ERROR || err;
                     }
+
+                    vm.output = err;
                     console.error(err);
                 }
             }
@@ -173,7 +210,7 @@
     }
 
     .CodeMirror-gutter {
-        padding: 1rem 0.5rem;
+        @apply px-2 pb-4;
     }
 
     .CodeMirror-gutter-elt {
@@ -181,7 +218,7 @@
     }
 
     .CodeMirror-lines {
-        @apply pr-0 py-4;
+        @apply pr-0 pb-4;
     }
 
     .CodeMirror-linenumber {
