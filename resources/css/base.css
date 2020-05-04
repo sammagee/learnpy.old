@@ -1,0 +1,7 @@
+* {
+    @apply relative;
+}
+
+html, body {
+    @apply overflow-hidden;
+}

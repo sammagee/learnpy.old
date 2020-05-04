@@ -52,8 +52,6 @@
     let editorInstance;
     let splitInstance;
 
-    import "codemirror/lib/codemirror.css";
-    import "../../css/editor/themes/tailwind.css";
     import "codemirror/mode/python/python";
     import "codemirror/addon/selection/active-line";
 

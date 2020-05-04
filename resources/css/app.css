@@ -1,15 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
-* {
-    @apply relative;
-}
+@import "tailwindcss/base";
 
-html, body {
-    @apply overflow-hidden;
-}
+@import "tailwindcss/components";
+@import "./base.css";
+@import "../../node_modules/codemirror/lib/codemirror.css";
+@import "./editor/themes/tailwind.css";
 
-@tailwind base;
-
-@tailwind components;
-
-@tailwind utilities;
+@import "tailwindcss/utilities";
