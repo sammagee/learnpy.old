@@ -60,17 +60,17 @@
 
         data: () => ({
             code: `def fib(n):
-    n1 = 0
-    n2 = 1
+  n1 = 0
+  n2 = 1
 
-    print(f"These are the first {n} numbers in the Fibonacci sequence:")
+  print(f"{n} numbers of Fibonacci sequence:")
 
-    for i in range(n):
-        print(f"\t{n1}")
-        n1, n2 = n2, n1 + n2
+  for i in range(n):
+    print(f"\\t{n1}")
+    n1, n2 = n2, n1 + n2
 
 def main():
-    fib(10)
+  fib(10)
 
 main()
 `,
@@ -109,7 +109,7 @@ main()
                         }
                     },
                     gutters: ["CodeMirror-linenumbers", "breakpoints"],
-                    indentUnit: 4,
+                    indentUnit: 2,
                     lineNumbers: true,
                     lineWrapping: true,
                     mode: 'text/x-python',
