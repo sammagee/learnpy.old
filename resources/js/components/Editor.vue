@@ -66,7 +66,7 @@
   print(f"{n} numbers of Fibonacci sequence:")
 
   for i in range(n):
-    print(f"\\t{n1}")
+    print(f"\\t=> {n1}")
     n1, n2 = n2, n1 + n2
 
 def main():
