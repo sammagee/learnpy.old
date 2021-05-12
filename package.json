@@ -26,7 +26,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "codemirror": "^5.52.2",
+        "codemirror": "^5.58.2",
         "learnpy": "^0.1.0",
         "rustpython_wasm": "0.1.0-pre-alpha.2",
         "split.js": "^1.5.11"
